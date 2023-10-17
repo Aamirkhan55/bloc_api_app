@@ -1,5 +1,6 @@
 import 'package:bloc_api_app/data/model/post_model.dart';
 import 'package:bloc_api_app/data/repository/post_repository.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -17,7 +18,7 @@ class PostCubit extends Cubit<PostState> {
     try {
     List<PostModel> posts = await postRepository.fetchPost();
     emit(PostLoadedState(posts));
-    } catch (e) {
+    }on DioException catch (e) {
       emit(PostErrorState(e.toString()));
     }
   }
